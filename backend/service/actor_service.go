@@ -31,5 +31,5 @@ func (service *ActorService) ListAll(ctx context.Context) []domain.Actor {
 
 	actors := service.ActorRepository.ListAll(ctx, tx)
 
-	return helper.ActorsResponse(actors)
+	return actors
 }

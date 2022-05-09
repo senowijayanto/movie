@@ -25,7 +25,7 @@ CREATE TABLE `actors` (
 CREATE TABLE `movies` (
   `movie_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(128) NOT NULL,
-  `release` YEAR DEFAULT NULL,
+  `release_date` DATE DEFAULT NULL,
   `description` TEXT DEFAULT NULL,
   PRIMARY KEY (`movie_id`),
   KEY idx_title(`title`)

@@ -21,6 +21,9 @@ func main() {
 	actorController := controller.NewActorController(actorService)
 
 	// Movie Services
+	movieRepository := repository.NewMovieRepository()
+	movieService := service.NewMovieService(movieRepository, db)
+	movieController := controller.NewMovieController(movieService)
 
 	// Cast Services
 	castRepository := repository.NewCastRepository()
@@ -30,6 +33,7 @@ func main() {
 	router := httprouter.New()
 	router.GET("/api/actors", actorController.ListAll)
 	router.GET("/api/casts", castController.ListAll)
+	router.GET("/api/movies/:movieId", movieController.ListById)
 
 	server := http.Server{
 		Addr:    "localhost:3000",

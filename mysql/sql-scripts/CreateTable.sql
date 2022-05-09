@@ -52,7 +52,6 @@ CREATE TABLE `ratings` (
   `rating_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `movie_id` SMALLINT UNSIGNED NOT NULL,
   `rating` TINYINT UNSIGNED NOT NULL,
-  `num_of_ratings` SMALLINT UNSIGNED NOT NULL,
   PRIMARY KEY (`rating_id`,`movie_id`),
   KEY idx_fk_movie_id (`movie_id`),
   CONSTRAINT fk_movie_rating_movie FOREIGN KEY (movie_id) REFERENCES movies (movie_id) ON DELETE RESTRICT ON UPDATE CASCADE

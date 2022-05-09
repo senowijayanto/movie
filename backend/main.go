@@ -30,10 +30,16 @@ func main() {
 	castService := service.NewCastService(castRepository, db)
 	castController := controller.NewCastController(castService)
 
+	// Rating Services
+	ratingRepository := repository.NewRatingRepository()
+	ratingService := service.NewRatingService(ratingRepository, db)
+	ratingController := controller.NewRatingController(ratingService)
+
 	router := httprouter.New()
 	router.GET("/api/actors", actorController.ListAll)
 	router.GET("/api/casts", castController.ListAll)
 	router.GET("/api/movies/:movieId", movieController.ListById)
+	router.POST("/api/ratings", ratingController.SaveRating)
 
 	server := http.Server{
 		Addr:    "localhost:3000",

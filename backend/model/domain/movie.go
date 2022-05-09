@@ -1,8 +1,8 @@
 package domain
 
 type Movie struct {
-	Id          int
-	Title       string
-	Release     int
-	Description string
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	Release     int    `json:"release"`
+	Description string `json:"description"`
 }

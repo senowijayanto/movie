@@ -5,10 +5,12 @@ import (
 	"backend/model/domain"
 	"context"
 	"database/sql"
+
+	sq "github.com/Masterminds/squirrel"
 )
 
 type IActorRepository interface {
-	ListAll(ctx context.Context, tx *sql.Tx) []domain.Actor
+	ListAll(ctx context.Context, tx *sql.Tx) (res []domain.Actor)
 }
 
 type ActorRepository struct{}
@@ -17,18 +19,21 @@ func NewActorRepository() IActorRepository {
 	return &ActorRepository{}
 }
 
-func (repo *ActorRepository) ListAll(ctx context.Context, tx *sql.Tx) []domain.Actor {
-	SQL := "SELECT actor_id, name FROM actors ORDER BY actor_id ASC"
-	rows, err := tx.QueryContext(ctx, SQL)
+func (repo *ActorRepository) ListAll(ctx context.Context, tx *sql.Tx) (res []domain.Actor) {
+	queryBuilder := sq.Select("actor_id", "name").From("actors").OrderBy("actor_id")
+	query, args, err := queryBuilder.ToSql()
+	helper.PanicIfError(err)
+
+	rows, err := tx.QueryContext(ctx, query, args...)
 	helper.PanicIfError(err)
 	defer rows.Close()
 
-	var actors []domain.Actor
+	res = []domain.Actor{}
 	for rows.Next() {
 		actor := domain.Actor{}
 		err := rows.Scan(&actor.Id, &actor.Name)
 		helper.PanicIfError(err)
-		actors = append(actors, actor)
+		res = append(res, actor)
 	}
-	return actors
+	return res
 }

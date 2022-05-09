@@ -2,14 +2,14 @@ package service
 
 import (
 	"backend/helper"
-	"backend/model/web"
+	"backend/model/domain"
 	"backend/repository"
 	"context"
 	"database/sql"
 )
 
 type IActorService interface {
-	ListAll(ctx context.Context) []web.ActorResponse
+	ListAll(ctx context.Context) []domain.Actor
 }
 
 type ActorService struct {
@@ -24,7 +24,7 @@ func NewActorService(actorRepository repository.IActorRepository, DB *sql.DB) IA
 	}
 }
 
-func (service *ActorService) ListAll(ctx context.Context) []web.ActorResponse {
+func (service *ActorService) ListAll(ctx context.Context) []domain.Actor {
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)

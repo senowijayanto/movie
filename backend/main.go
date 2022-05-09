@@ -9,14 +9,27 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
 	db := app.NewDB()
+
+	// Actor Services
 	actorRepository := repository.NewActorRepository()
 	actorService := service.NewActorService(actorRepository, db)
 	actorController := controller.NewActorController(actorService)
-	router := app.NewRouter(actorController)
+
+	// Movie Services
+
+	// Cast Services
+	castRepository := repository.NewCastRepository()
+	castService := service.NewCastService(castRepository, db)
+	castController := controller.NewCastController(castService)
+
+	router := httprouter.New()
+	router.GET("/api/actors", actorController.ListAll)
+	router.GET("/api/casts", castController.ListAll)
 
 	server := http.Server{
 		Addr:    "localhost:3000",

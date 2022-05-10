@@ -9,11 +9,11 @@ services:
     restart: always
     cap_add:
       - "SYS_NICE"
-  # backend:
-  #   container_name: backend
-  #   restart: always
-  #   build: ./backend
-  #   ports:
-  #     - '3000:3000'
-  #   links:
-  #     - db
+  backend:
+    container_name: backend
+    restart: always
+    build: ./backend
+    ports:
+      - '3000:3000'
+    links:
+      - db

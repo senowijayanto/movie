@@ -7,7 +7,7 @@ import (
 )
 
 func NewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:supersecret@tcp(localhost:3307)/movie_db")
+	db, err := sql.Open("mysql", "root:supersecret@tcp(db)/movie_db")
 	helper.PanicIfError(err)
 
 	db.SetMaxIdleConns(5)

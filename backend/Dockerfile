@@ -10,6 +10,6 @@ RUN go mod tidy
 
 RUN go build -o backend
 
-EXPOSE 8000
+EXPOSE 3000
 
 ENTRYPOINT ["/app/backend"]

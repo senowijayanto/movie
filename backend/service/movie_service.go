@@ -11,6 +11,8 @@ import (
 
 type IMovieService interface {
 	ListById(ctx context.Context, movieId int) domain.Movie
+	ListAll(ctx context.Context, params helper.FetchParam) (res []domain.MovieRatingResponse)
+	ListAllWithPagination(ctx context.Context, params helper.FetchParam) (res []domain.MovieRatingResponse)
 }
 
 type MovieService struct {
@@ -36,4 +38,24 @@ func (service *MovieService) ListById(ctx context.Context, movieId int) domain.M
 	}
 
 	return movie
+}
+
+func (service *MovieService) ListAll(ctx context.Context, params helper.FetchParam) (res []domain.MovieRatingResponse) {
+	tx, err := service.DB.Begin()
+	helper.PanicIfError(err)
+	defer helper.CommitOrRollback(tx)
+
+	res = service.MovieRepository.ListAll(ctx, tx, params)
+
+	return
+}
+
+func (service *MovieService) ListAllWithPagination(ctx context.Context, params helper.FetchParam) (res []domain.MovieRatingResponse) {
+	tx, err := service.DB.Begin()
+	helper.PanicIfError(err)
+	defer helper.CommitOrRollback(tx)
+
+	res = service.MovieRepository.ListAllWithPagination(ctx, tx, params)
+
+	return
 }

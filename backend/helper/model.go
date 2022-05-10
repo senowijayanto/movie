@@ -7,6 +7,8 @@ import (
 type FetchParam struct {
 	Limit  int
 	Offset int
+	Sort   string
+	Filter string
 }
 
 func ActorResponse(actor domain.Actor) domain.Actor {

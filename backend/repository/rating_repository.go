@@ -19,7 +19,7 @@ func NewRatingRepository() IRatingRepository {
 	return &RatingRepository{}
 }
 
-func (r *RatingRepository) SaveRating(ctx context.Context, tx *sql.Tx, rating domain.Rating) domain.Rating {
+func (repo *RatingRepository) SaveRating(ctx context.Context, tx *sql.Tx, rating domain.Rating) domain.Rating {
 	queryBuilder := sq.Insert("ratings").Columns("movie_id", "rating").Values(rating.MovieId, rating.Rating).PlaceholderFormat(sq.Question)
 	query, args, err := queryBuilder.ToSql()
 	helper.PanicIfError(err)

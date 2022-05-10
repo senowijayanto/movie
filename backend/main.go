@@ -39,6 +39,7 @@ func main() {
 	router.GET("/api/actors", actorController.ListAll)
 	router.GET("/api/casts", castController.ListAll)
 	router.GET("/api/movies/:movieId", movieController.ListById)
+	router.GET("/api/movies", movieController.ListAll)
 	router.POST("/api/ratings", ratingController.SaveRating)
 
 	server := http.Server{

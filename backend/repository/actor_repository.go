@@ -10,7 +10,7 @@ import (
 )
 
 type IActorRepository interface {
-	ListAll(ctx context.Context, tx *sql.Tx) (res []domain.Actor)
+	ListAll(ctx context.Context, tx *sql.Tx, params helper.FetchParam) (res []domain.Actor)
 }
 
 type ActorRepository struct{}
@@ -19,8 +19,17 @@ func NewActorRepository() IActorRepository {
 	return &ActorRepository{}
 }
 
-func (repo *ActorRepository) ListAll(ctx context.Context, tx *sql.Tx) (res []domain.Actor) {
+func (repo *ActorRepository) ListAll(ctx context.Context, tx *sql.Tx, params helper.FetchParam) (res []domain.Actor) {
 	queryBuilder := sq.Select("actor_id", "name").From("actors").OrderBy("actor_id")
+
+	if params.Limit > 0 {
+		queryBuilder = queryBuilder.Limit(uint64(params.Limit))
+	}
+
+	if params.Offset > 0 {
+		queryBuilder = queryBuilder.Offset(uint64(params.Offset))
+	}
+
 	query, args, err := queryBuilder.ToSql()
 	helper.PanicIfError(err)
 

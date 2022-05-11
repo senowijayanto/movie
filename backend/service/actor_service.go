@@ -9,7 +9,7 @@ import (
 )
 
 type IActorService interface {
-	ListAll(ctx context.Context) []domain.Actor
+	ListAll(ctx context.Context, params helper.FetchParam) []domain.Actor
 }
 
 type ActorService struct {
@@ -24,12 +24,12 @@ func NewActorService(actorRepository repository.IActorRepository, DB *sql.DB) IA
 	}
 }
 
-func (service *ActorService) ListAll(ctx context.Context) []domain.Actor {
+func (service *ActorService) ListAll(ctx context.Context, params helper.FetchParam) []domain.Actor {
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
-	actors := service.ActorRepository.ListAll(ctx, tx)
+	actors := service.ActorRepository.ListAll(ctx, tx, params)
 
 	return actors
 }

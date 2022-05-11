@@ -288,6 +288,54 @@ $ docker-compose up -d
         ]
       }
       ```
+  - **List Actors With Pagination**
+
+    * Method : GET
+
+    * URL : `http://localhost:3000/api/actors?limit=7&offset=0`
+
+    * Request :
+      ```bash
+      curl --location --request GET 'http://localhost:3000/api/actors?limit=7&offset=0'
+      ```
+
+    * Response :
+      ```
+      {
+        "code": 200,
+        "status": "OK",
+        "data": [
+          {
+            "id": 1,
+            "name": "Penelope Guiness"
+          },
+          {
+            "id": 2,
+            "name": "Nick Wahlberg"
+          },
+          {
+            "id": 3,
+            "name": "Ed Chase"
+          },
+          {
+            "id": 4,
+            "name": "Jennifer Davis"
+          },
+          {
+            "id": 5,
+            "name": "Johnny Lollobrigida"
+          },
+          {
+            "id": 6,
+            "name": "Bette Nicholson"
+          },
+          {
+            "id": 7,
+            "name": "Grace Mostel"
+          }
+        ]
+      }
+      ```
   - **List of Casts**
 
     * Method : GET
